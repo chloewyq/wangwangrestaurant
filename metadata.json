@@ -1,0 +1,7 @@
+{
+  "name": "旺旺苏小餐馆 🏠",
+  "description": "A customized home restaurant menu app allowing family members to order dishes, add new items, and generate shareable menu images.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
