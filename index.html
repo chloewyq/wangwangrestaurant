@@ -2,10 +2,12 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>旺旺苏小餐馆 🏠</title>
+    <!-- 使用 Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- 使用国内极速 CDN 加载 html2canvas -->
+    <script src="https://lib.baomitu.com/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
       /* Hide scrollbar for Chrome, Safari and Opera */
       .no-scrollbar::-webkit-scrollbar {
@@ -19,6 +21,30 @@
       body {
         background-color: #f3f4f6;
         -webkit-tap-highlight-color: transparent;
+        overscroll-behavior-y: none; /* 防止微信下拉回弹 */
+      }
+      /* 简单的加载动画 */
+      #loading {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f3f4f6;
+        z-index: 9999;
+        transition: opacity 0.5s;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #e5e7eb;
+        border-top: 4px solid #f97316;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
       }
     </style>
   <script type="importmap">
@@ -35,7 +61,22 @@
 </script>
 </head>
   <body>
+    <div id="loading">
+      <div class="spinner"></div>
+    </div>
     <div id="root"></div>
     <script type="module" src="./index.tsx"></script>
+    <script>
+      // 移除加载动画
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          const loader = document.getElementById('loading');
+          if(loader) {
+            loader.style.opacity = '0';
+            setTimeout(() => loader.remove(), 500);
+          }
+        }, 500);
+      });
+    </script>
   </body>
 </html>
